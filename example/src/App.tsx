@@ -128,7 +128,7 @@ const App = () => {
         <div>ControlledMathView with Callback</div>
         <ControlledMathView virtualKeyboardMode="onfocus" onCommit={(sender) => console.log('onCommit', sender)} />
         <div>ControlledMathView <strong>without</strong> Callback</div>
-        <ControlledMathView virtualKeyboardMode="onfocus" /*onCommit={(sender) => console.log('onCommit', sender)} */ />
+        <ControlledMathView virtualKeyboardMode={k} /*onCommit={(sender) => console.log('onCommit', sender)} */ />
         <strong>check the console for logs</strong>
       </div>
       <div>
