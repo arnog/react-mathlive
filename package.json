@@ -1,10 +1,10 @@
 {
-  "name": "react-math-view",
+  "name": "react-mathlive",
   "version": "1.1.0",
   "description": "React bindings for MathLive",
   "author": "ShaMan123",
   "license": "MIT",
-  "repository": "ShaMan123/react-math-view",
+  "repository": "arnog/react-mathlive",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
