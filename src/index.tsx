@@ -36,30 +36,5 @@ const MathView = React.forwardRef<MathfieldElement, MathViewProps>((props, ref) 
   );
 });
 
-/**
- * @deprecated
- * This Component uses <input> and {useEventDispatchRef} as a workaround for bubbling change events to react
- * Motivation: 'onChange' is a must have in react, it is the basics of state handling
- * It fires an event from {onContentDidChange}
- */
-export const MathViewWrapper = React.forwardRef<MathfieldElement, MathViewProps>((props, ref) => {
-  const [_input, dispatchEvent] = useEventDispatchRef();
-  const onContentDidChange = useCallback((sender: Mathfield) => {
-    props.onContentDidChange && props.onContentDidChange(sender);
-    dispatchEvent('change', { value: sender.getValue(), mathfield: sender });
-  }, [props.onContentDidChange]);
-
-  return (
-    <React.Fragment>
-      {ReactDOM.createPortal(<input hidden ref={_input} onChange={props.onChange as any} />, useAddChild('span'))}
-      <MathView
-        {...props}
-        ref={ref}
-        onContentDidChange={onContentDidChange}
-      />
-    </React.Fragment>
-  );
-})
-
 export * from './types';
 export default MathView;

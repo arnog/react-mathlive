@@ -160,38 +160,3 @@ export function useEventRegistration(ref: React.RefObject<HTMLElement>, props: M
     };
   }, [ref, props])
 }
-
-/**
- * @deprecated
- * This hook enables change events to propagate to react
- * https://stackoverflow.com/questions/23892547/what-is-the-best-way-to-trigger-onchange-event-in-react-js#46012210
- * https://github.com/facebook/react/issues/11488
- * https://stackoverflow.com/a/62111884/9068029
- */
-export function useEventDispatchRef() {
-  const ref = useRef<HTMLInputElement>(null);
-  const dispatchEvent = useCallback((type: string, detail: { value: string, [key: string]: any }) => {
-    const handler = ref.current;
-    if (!handler) return;
-    const valueSetter = Object.getOwnPropertyDescriptor(handler, 'value')!.set!;
-    const prototype = Object.getPrototypeOf(handler);
-    const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value')!.set!;
-    if (valueSetter && valueSetter !== prototypeValueSetter) {
-      prototypeValueSetter.call(handler, detail.value);
-    } else {
-      valueSetter.call(handler, detail.value);
-    }
-    handler.dispatchEvent(new CustomEvent(type, { bubbles: true, cancelable: true, detail }));
-  }, [ref]);
-
-  return [ref, dispatchEvent] as [typeof ref, typeof dispatchEvent];
-}
-
-export function useAddChild(tagName: keyof HTMLElementTagNameMap) {
-  const container = useMemo(() => document.createElement(tagName), []);
-  useLayoutEffect(() => {
-    document.body.appendChild(container);
-    return () => { document.body.removeChild(container) };
-  }, [container]);
-  return container;
-}
