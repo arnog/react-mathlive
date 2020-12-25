@@ -1,6 +1,6 @@
 import isEqual from 'lodash.isequal';
 import { MathfieldConfig } from "mathlive";
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { renderToString } from "react-dom/server";
 import { MathViewProps, MathViewRef } from "./types";
 

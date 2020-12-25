@@ -1,11 +1,10 @@
-import { Mathfield, MathfieldElement } from 'mathlive';
+import { MathfieldElement } from 'mathlive';
 import 'mathlive/dist/mathlive-fonts.css';
 import 'mathlive/dist/mathlive.min';
-import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { renderToString } from 'react-dom/server';
 import { MathViewProps } from './types';
-import { filterConfig, useEventRegistration, useAddChild, useEventDispatchRef, useUpdateOptions } from './utils';
+import { filterConfig, useEventRegistration, useUpdateOptions } from './utils';
 
 const MathView = React.forwardRef<MathfieldElement, MathViewProps>((props, ref) => {
   const _ref = useRef<MathfieldElement>(null);
