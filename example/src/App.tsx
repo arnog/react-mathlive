@@ -133,7 +133,7 @@ const App = () => {
       </div>
       <div>
         <div>issue <a href="https://github.com/arnog/react-mathlive/issues/4" target="_blank"><strong>#4</strong></a></div>
-        <label htmlFor="@">toggle to test how cursor is affected</label>
+        <label htmlFor="@">toggle to test how caret is affected</label>
         <input id="@" type="checkbox" checked={enabled} onChange={e => setEnabled(e.currentTarget.checked)} />
         {enabled ? <WithSetOptions value={value} /> : <MathView value={value} />}
       </div>
