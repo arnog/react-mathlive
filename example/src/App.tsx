@@ -44,17 +44,30 @@ const ControlledMathView = (props: MathViewProps) => {
     props.onChange && props.onChange(e);
   }, [props.onChange]);
 
+  const ref = useRef<MathViewRef>(null);
   useEffect(() => {
     console.log('ControlledMathView value changed', value);
-  }, [value])
+  }, [value]);
+
+
 
   return (
     <MathView
       {...props}
+      ref={ref}
       value={value}
       onChange={onChange}
     />
   )
+}
+
+const WithSetOptions = (props: MathViewProps) => {
+  const ref = useRef<MathViewRef>(null);
+  useEffect(() => {
+    const t = setInterval(() => ref.current?.setOptions({}), 1000);
+    return () => clearInterval(t)
+  });
+  return <MathView {...props} ref={ref} />
 }
 
 const App = () => {
@@ -66,59 +79,66 @@ const App = () => {
       setK("onfocus");
     }, 1500);
   })
-  return <div>
-    <ControlledMathView
-      // /virtualKeyboardTheme="material"
-      virtualKeyboardMode="onfocus"
-      onKeystroke={(sender, key, event) => {
-        console.log('onKeystroke', { sender, key, event });
-        return true;
-      }}
-      onMoveOutOf={(sender, direction) => {
-        console.log('onMoveOutOf', { sender, direction });
-        return true;
-      }}
-      onTabOutOf={(sender, direction) => {
-        console.log('onTabOutOf', { sender, direction });
-        return false;
-      }}
-      onLoad={(e) => console.log('onLoad', e)}
-      onFocus={(e) => console.log('onFocus', e)}
-      onBlur={(e) => console.log('onBlur', e)}
-      onVirtualKeyboardToggle={(sender, visible, keyboard) => console.log('onVirtualKeyboardToggle', { sender, visible, keyboard })}
-      onMathFieldFocus={(sender) => console.log('onMathFieldFocus', sender)}
-      onMathFieldBlur={(sender) => console.log('onMathFieldBlur', sender)}
-      onContentWillChange={(sender) => console.log('onContentWillChange', sender)}
-      onContentDidChange={(sender) => console.log('onContentDidChange', sender)}
-      onSelectionWillChange={(sender) => console.log('onSelectionWillChange', sender)}
-      onSelectionDidChange={(sender) => console.log('onSelectionDidChange', sender)}
-      onUndoStateWillChange={(target, action) => console.log('onUndoStateWillChange', { target, action })}
-      onUndoStateDidChange={(target, action) => console.log('onUndoStateDidChange', { target, action })}
-      onCommit={(sender) => console.log('onCommit', sender)}
-      onModeChange={(sender, mode) => console.log('onModeChange', sender, mode)}
-      onReadAloudStatus={(sender) => console.log('onReadAloudStatus', sender)}
-      onChange={e => console.log('onChange', e.nativeEvent)}
-      onInput={e => console.log('onInput', e.nativeEvent)}
-    >
-      \alpha
+  const [enabled, setEnabled] = useState(true);
+  return (
+    <div>
+      <ControlledMathView
+        // /virtualKeyboardTheme="material"
+        virtualKeyboardMode="onfocus"
+        onKeystroke={(sender, key, event) => {
+          console.log('onKeystroke', { sender, key, event });
+          return true;
+        }}
+        onMoveOutOf={(sender, direction) => {
+          console.log('onMoveOutOf', { sender, direction });
+          return true;
+        }}
+        onTabOutOf={(sender, direction) => {
+          console.log('onTabOutOf', { sender, direction });
+          return false;
+        }}
+        onLoad={(e) => console.log('onLoad', e)}
+        onFocus={(e) => console.log('onFocus', e)}
+        onBlur={(e) => console.log('onBlur', e)}
+        onVirtualKeyboardToggle={(sender, visible, keyboard) => console.log('onVirtualKeyboardToggle', { sender, visible, keyboard })}
+        onMathFieldFocus={(sender) => console.log('onMathFieldFocus', sender)}
+        onMathFieldBlur={(sender) => console.log('onMathFieldBlur', sender)}
+        onContentWillChange={(sender) => console.log('onContentWillChange', sender)}
+        onContentDidChange={(sender) => console.log('onContentDidChange', sender)}
+        onSelectionWillChange={(sender) => console.log('onSelectionWillChange', sender)}
+        onSelectionDidChange={(sender) => console.log('onSelectionDidChange', sender)}
+        onUndoStateWillChange={(target, action) => console.log('onUndoStateWillChange', { target, action })}
+        onUndoStateDidChange={(target, action) => console.log('onUndoStateDidChange', { target, action })}
+        onCommit={(sender) => console.log('onCommit', sender)}
+        onModeChange={(sender, mode) => console.log('onModeChange', sender, mode)}
+        onReadAloudStatus={(sender) => console.log('onReadAloudStatus', sender)}
+        onChange={e => console.log('onChange', e.nativeEvent)}
+        onInput={e => console.log('onInput', e.nativeEvent)}
+      >
+        \alpha
       </ControlledMathView>
-    <MathWithKeyboard value={value} />
-    <MathView virtualKeyboardMode={k} className="red">{value}</MathView>
-    <p>
-      <MathWithKeyboard style={{ backgroundColor: 'blueviolet' }} value="\gamma" />
-      <MathWithKeyboard value="\delta" />
-    </p>
-    <MathWithKeyboardButton>{"x=\\frac{-b\\pm\\sqrt{b ^ 2 - 4ac}}{2a}"}</MathWithKeyboardButton>
-    <div style={{ margin: 50 }}>
-      <div>ControlledMathView with Callback</div>
-      <ControlledMathView virtualKeyboardMode="onfocus" onCommit={(sender) => console.log('onCommit', sender)} />
-      <div>ControlledMathView <strong>without</strong> Callback</div>
-      <ControlledMathView virtualKeyboardMode="onfocus" /*onCommit={(sender) => console.log('onCommit', sender)} */ />
-      <strong>check the console for logs</strong>
+      <MathWithKeyboard value={value} />
+      <MathView virtualKeyboardMode={k} className="red">{value}</MathView>
+      <p>
+        <MathWithKeyboard style={{ backgroundColor: 'blueviolet' }} value="\gamma" />
+        <MathWithKeyboard value="\delta" />
+      </p>
+      <MathWithKeyboardButton>{"x=\\frac{-b\\pm\\sqrt{b ^ 2 - 4ac}}{2a}"}</MathWithKeyboardButton>
+      <div style={{ margin: 50 }}>
+        <div>ControlledMathView with Callback</div>
+        <ControlledMathView virtualKeyboardMode="onfocus" onCommit={(sender) => console.log('onCommit', sender)} />
+        <div>ControlledMathView <strong>without</strong> Callback</div>
+        <ControlledMathView virtualKeyboardMode="onfocus" /*onCommit={(sender) => console.log('onCommit', sender)} */ />
+        <strong>check the console for logs</strong>
+      </div>
+      <div>
+        <div>issue <a href="https://github.com/arnog/react-mathlive/issues/4" target="_blank"><strong>#4</strong></a></div>
+        <label htmlFor="@">toggle to test how cursor is affected</label>
+        <input id="@" type="checkbox" checked={enabled} onChange={e => setEnabled(e.currentTarget.checked)} />
+        {enabled ? <WithSetOptions value={value} /> : <MathView value={value} />}
+      </div>
     </div>
-
-
-  </div>
+  )
 }
 
 export default App;
