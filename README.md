@@ -34,6 +34,7 @@ Check out [react-native-math-view](https://github.com/ShaMan123/react-native-mat
 
 ## Dev
 ### Before you begin make sure to install dependecies
+#### Don't forget to do the same in `/example` before running it
 ```bash
 npm i /* or */ yarn --production=false
 ```
