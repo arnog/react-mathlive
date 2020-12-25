@@ -117,11 +117,12 @@ export function filterConfig(props: MathViewProps) {
 }
 
 /**
- * This hook is used to prevent the loss of caret position upon rendering (setting options causes what seems to be a full reset of Mathfield).
- * When an update was passed to the component the effect deemed the new config dep !== previous config dep, hence invoking `setOptions` and losing caret.
- * This solution will update options only if they have changed is comparison to the previous values (not object containing them), avoiding uncessary rendering.
- * 
- * !! The issue of losing caret when using `setOptions` consists. !!
+ * Performance Optimization
+ * ------------------------
+ * This hook memoizes config in order to prevent unnecessary rendering/changes
+ * The hook deemed the new config dep !== previous config dep, hence invoking `setOptions`.
+ * This solution will update options only if they have changed is comparison to the previous values (not object containing them),
+ *  avoiding uncessary rendering.
  * 
  * @param ref 
  * @param config 
@@ -134,6 +135,10 @@ export function useUpdateOptions(ref: React.RefObject<MathViewRef>, config: Part
       configRef.current = config;
     }
   }, [ref, config, configRef]);
+  // set options after rendering for first rendering pass, by then the mathfield has mounted and is able to receive it, before it mounted nothing happens
+  useEffect(() => {
+    ref.current?.setOptions(config);
+  }, []);
 }
 
 export function useEventRegistration(ref: React.RefObject<HTMLElement>, props: MathViewProps) {
