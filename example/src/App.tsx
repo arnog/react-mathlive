@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import MathView, { MathChangeEvent, MathViewProps, MathViewRef } from 'react-math-view';
+import MathView, { MathViewProps, MathViewRef } from 'react-math-view';
 
 const MathWithKeyboard = (props: MathViewProps) => {
   const ref = useRef<MathViewRef>(null);
@@ -39,10 +39,14 @@ const MathWithKeyboardButton = (props: MathViewProps) => {
 
 const ControlledMathView = (props: MathViewProps) => {
   const [value, setValue] = useState(props.value || "$$d=\\sqrt[]{x^2+y^2}$$");
-  const onChange = useCallback((e: MathChangeEvent) => {
-    console.log('ControlledMathView onChange', e)
-    setValue(e.nativeEvent.detail.value);
-  }, [setValue]);
+  const onChange = useCallback((e: React.SyntheticEvent<any, any>) => {
+    setValue(e.currentTarget.getValue());
+    props.onChange && props.onChange(e);
+  }, [props.onChange]);
+
+  useEffect(() => {
+    console.log('ControlledMathView value changed', value);
+  }, [value])
 
   return (
     <MathView
@@ -94,6 +98,7 @@ const App = () => {
       onModeChange={(sender, mode) => console.log('onModeChange', sender, mode)}
       onReadAloudStatus={(sender) => console.log('onReadAloudStatus', sender)}
       onChange={e => console.log('onChange', e.nativeEvent)}
+      onInput={e => console.log('onInput', e.nativeEvent)}
     >
       \alpha
       </ControlledMathView>
