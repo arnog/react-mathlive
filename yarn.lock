@@ -7398,10 +7398,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-mathlive@^0.59.0:
-  version "0.59.0"
-  resolved "https://registry.yarnpkg.com/mathlive/-/mathlive-0.59.0.tgz#95e3720a8c16a295d266c36ddf9d6c8bfc363228"
-  integrity sha512-CUf7kAY1UWTvJm5IFJrFlXssyl851aGPNAdlchMbAMZQnryudQJE59BlrPTtAeY95k41PGqMmM8Vozj+We+hNA==
+mathlive@^0.60.0:
+  version "0.60.0"
+  resolved "https://registry.yarnpkg.com/mathlive/-/mathlive-0.60.0.tgz#6a52109cd63e8e13bc8d63031fd2fcabb702794e"
+  integrity sha512-Z2nFp4vIqYWDeqwhAeptskyZ3siGEQVJ7Ol43uPD3t5wxKU7p2346a5MvC7RHujeqHxQMtjd9ZePEiNvYClSPA==
 
 maxmin@^2.1.0:
   version "2.1.0"
