@@ -66,6 +66,6 @@
   ],
   "dependencies": {
     "lodash.isequal": "^4.5.0",
-    "mathlive": "^0.59.0"
+    "mathlive": "^0.60.0"
   }
 }
