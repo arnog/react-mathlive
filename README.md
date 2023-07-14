@@ -1,56 +1,28 @@
-# react-math-view | react-mathlive
+# Getting Started with MathLive and React
 
-> React bindings for [MathLive](https://github.com/arnog/mathlive)
+This sample demonstrates how to use MathLive with React.
 
-[![NPM](https://img.shields.io/npm/v/react-math-view.svg)](https://www.npmjs.com/package/react-math-view) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+## Theory of Operations
 
-## Install
+A MathLive mathfield behaves as a regular DOM element:
+- define mathfields using the `<math-field>` tag in JSX
+- use the `useRef()` hook to get a reference to the corresponding DOM element
+- use the `useEffect(..., [])` hook to customize the mathfield on mount
 
-```bash
-npm install --save react-math-view
-yarn add react-math-view
-```
+## Available Scripts
 
-## Usage
+In the project directory, you can run:
 
-```tsx
-import { useRef } from 'react';
-import MathView, { MathViewRef } from 'react-math-view';
+### `npm start`
 
-const ref = useRef<MathViewRef>(null);
-const toggleKeyboard = useCallback(() => ref.current?.executeCommand('toggleVirtualKeyboard'), [ref]);
-const getSpokenValue = useCallback(() => ref.current?.getValue('spoken'), [ref]);
-<MathView
- value="x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}"
- ref={ref}
-  />
-```
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## Example
-Check out the [live example](https://shaman123.github.io/react-math-view/).
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-## Looking for React-Native?
-Check out [react-native-math-view](https://github.com/ShaMan123/react-native-math-view#readme).
 
-## Dev
-### Before you begin make sure to install dependecies
-#### Don't forget to do the same in `/example` before running it
-```bash
-npm i /* or */ yarn --production=false
-```
+## Learn More
 
-### Available commands
-```bash
-// start dev servers for /src and /example
-npm run dev
+You can learn more in the [MathLive documentation](https://cortexjs.io/mathlive/guides/react/).
 
-// publish to npm
-npm run publish
-
-// deploy gh-pages (example app)
-npm run deploy
-```
-
-## License
-
-MIT © [ShaMan123](https://github.com/ShaMan123)
